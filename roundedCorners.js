@@ -1,7 +1,7 @@
 (function (H) {
     var curPercentage=[];
     H.wrap(H.seriesTypes.column.prototype, 'translate', function (proceed) {
-
+        
         var options = this.options,
             rTopLeft = options.borderRadiusTopLeft || 0,
             rTopRight = options.borderRadiusTopRight || 0,
@@ -13,13 +13,13 @@
         proceed.call(this);
 
         if (rTopLeft || rTopRight || rBottomRight || rBottomLeft) {
-
+            
             H.each(this.points, function (point) {
                 var iBottomRight = rBottomRight,
                     iBottomLeft = rBottomLeft,
                     iTopRight = rTopRight,
                     iTopLeft = rTopLeft;
-
+                
                 //console.log(point);
                 if (typeof(curPercentage[point.index])=='undefined'){
                     curPercentage[point.index]=0;
@@ -28,12 +28,12 @@
                 curPercentage[point.index]+=1.0*parseFloat(point.percentage).toFixed(6);
                 //console.log(prevPercentage);
                 //console.log(curPercentage);
-
+                
                 if (prevPercentage==0 & curPercentage[point.index] == 100) {
                     // special case, only one value > 0, preserve all border radius
                     // reset for the next call
                     curPercentage[point.index]=0;
-
+                    
                 } else if (prevPercentage==0) {
                     //right side
                     iBottomRight = 0;
@@ -86,6 +86,6 @@
 
             });
         }
-
+        
     });
 }(Highcharts));
